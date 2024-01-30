@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request #importe de las librerias
+import forms
 
 app=Flask(__name__)
 
@@ -8,11 +9,20 @@ app=Flask(__name__)
 def index():
     return render_template("index.html") #importe de archivos html
 
-@app.route("/alumnos") #Pantalla de alumnos
+@app.route("/alumnos", methods=["GET", "POST"]) #Pantalla de alumnos
 def alumnos():
-    titulo="Alumnos UTL"
-    nombres=["mario", "pedro", "juan", "Angel"]
-    return render_template("alumnos.html",titulo=titulo, nombres=nombres)
+    alumno_clase = forms.UserForm(request.form)
+    
+    if request.method == "POST":
+        pass
+    
+    return render_template("alumnos.html", form=alumno_clase)
+    '''
+        titulo="Alumnos UTL"
+        nombres=["mario", "pedro", "juan", "Angel"]
+        return render_template("alumnos.html",titulo=titulo, nombres=nombres)
+    '''
+
     '''
         Para envio de informacion de variable, 
         se puede enviar a traves de render_template haciendo referencia a las variables
