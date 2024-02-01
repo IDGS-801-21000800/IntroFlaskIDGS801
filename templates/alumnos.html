@@ -5,7 +5,7 @@
 {% import "_macros.html" as macros %}
 
     <h2>Página de alumnos {{titulo}}</h2>
-    <form action="" novalidate>
+    <form action="" method="post" novalidate>
         <div class="row control-group">
             <div class="form-group form-group col-xs-12 floating-label-form-group controls">
                 {{macros.camposNuevos(form.nombre, class="form-control")}}
@@ -33,5 +33,9 @@
         </div>
         <input type="submit" value="Registrar" name="btn1" id="btn1">
     </form>
+
+    <h1>nombre: {{nom}} </h1>
+    <h1>Apellido paterno: {{apep}} </h1>
+    <h1>Apellido materno: {{apem}} </h1>
 
 {% endblock %}

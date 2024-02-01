@@ -12,11 +12,19 @@ def index():
 @app.route("/alumnos", methods=["GET", "POST"]) #Pantalla de alumnos
 def alumnos():
     alumno_clase = forms.UserForm(request.form)
-    
+    nom=""    
+    apeP=""
+    apeM=""
     if request.method == "POST":
-        pass
-    
-    return render_template("alumnos.html", form=alumno_clase)
+        nom=alumno_clase.nombre.data
+        apeP=alumno_clase.apaterno.data
+        apeM=alumno_clase.amaterno.data
+        email=alumno_clase.email.data
+        edad=alumno_clase.edad.data
+        print("nombre: {}".format(nom))
+        print("Apellido Paterno: {}".format(apeP))
+        print("Apellido Materno: {}".format(apeM))
+    return render_template("alumnos.html", form=alumno_clase, nom=nom, apep=apeP, apem=apeM)
     '''
         titulo="Alumnos UTL"
         nombres=["mario", "pedro", "juan", "Angel"]
