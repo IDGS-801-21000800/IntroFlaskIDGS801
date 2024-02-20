@@ -14,17 +14,16 @@ def alumnos():
     alumno_clase = forms.UserForm(request.form)
     nom=""    
     apeP=""
-    apeM=""
-    if request.method == "POST":
+    apeM="" 
+    email=""
+    edad=0
+    if request.method == "POST" and alumno_clase.validate():
         nom=alumno_clase.nombre.data
         apeP=alumno_clase.apaterno.data
         apeM=alumno_clase.amaterno.data
         email=alumno_clase.email.data
         edad=alumno_clase.edad.data
-        print("nombre: {}".format(nom))
-        print("Apellido Paterno: {}".format(apeP))
-        print("Apellido Materno: {}".format(apeM))
-    return render_template("alumnos.html", form=alumno_clase, nom=nom, apep=apeP, apem=apeM)
+    return render_template("alumnos.html", form=alumno_clase, nom=nom, apep=apeP, apem=apeM, email=email, edad=edad)
     '''
         titulo="Alumnos UTL"
         nombres=["mario", "pedro", "juan", "Angel"]
