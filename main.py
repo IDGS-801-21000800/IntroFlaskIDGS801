@@ -1,16 +1,21 @@
 from flask import Flask, render_template, request #importe de las librerias
+from flask import flash
+from flask_wtf.csrf import CSRFProtect
+from flask import g
 import forms
 
 app=Flask(__name__)
+app.secret_key = 'esa no es mi clave secreta'
 
  #definicion de rutas
- #por defecto, los metodos son de tipo post
+ #por defecto, los metodos son de tipo get
 @app.route("/") #Pagina principal 
 def index():
     return render_template("index.html") #importe de archivos html
 
 @app.route("/alumnos", methods=["GET", "POST"]) #Pantalla de alumnos
 def alumnos():
+    print("alumno: {}".format(g.nombre))
     alumno_clase = forms.UserForm(request.form)
     nom=""    
     apeP=""
@@ -23,6 +28,10 @@ def alumnos():
         apeM=alumno_clase.amaterno.data
         email=alumno_clase.email.data
         edad=alumno_clase.edad.data
+        
+        mensaje = "Bienvenido {}".format(nom)
+        flash(mensaje)
+
     return render_template("alumnos.html", form=alumno_clase, nom=nom, apep=apeP, apem=apeM, email=email, edad=edad)
     '''
         titulo="Alumnos UTL"
@@ -100,6 +109,20 @@ def resultado():
         num2 = request.form.get("n2")
         res = int(num1)*int(num2)
         return "La multiplicacion {} x {} = {}".format(num1,num2,res)
+
+@app.errorhandler(404)
+def errorHandler(ex):
+    return render_template("404.html"),404
+
+@app.before_request
+def beforeRequest():
+    g.nombre = "Mario"
+    print("before")
+
+@app.after_request
+def afterRequest(response):
+    print("despoes")    
+    return response
 
 if __name__=="__main__":
     app.run(debug=True) #Activar modo de debug, recarga la aplicacion
